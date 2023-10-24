@@ -1,8 +1,9 @@
 import {describe, expect, it} from 'vitest';
 import {RequestStatus} from '../../constants';
-import {mockOffer} from '../../utils/mocks';
+import {mockOffer, mockOffers} from '../../utils/mocks';
 import {favoritesDataSlice} from './favorites-data.slice';
 import {changeFavorite, fetchFavorites} from '../api-actions';
+import { TFavoriteData } from '../../types/offer';
 
 describe('FavoritesData slice', () => {
   const action = {type: ''};
@@ -45,20 +46,22 @@ describe('FavoritesData slice', () => {
   });
 
   it('should add offer to array "favoriteOffers" with "changeFavorite.fulfilled"', () => {
-    const state = {favoriteOffers: []};
-    const expectedState = {favoriteOffers: [mockOffer]};
+    const state = {favoriteOffers: [], fetchFavoriteOffersStatus: RequestStatus.Success};
+    const requestFavoriteData = {id: mockOffer.id, status: 1} as TFavoriteData;
+    const expectedState = {favoriteOffers: [mockOffer], fetchFavoriteOffersStatus: RequestStatus.Success};
     const result = favoritesDataSlice.reducer(state, changeFavorite.fulfilled(
-      mockOffer, '', undefined
+      mockOffer, '', requestFavoriteData
     ));
 
     expect(result).toEqual(expectedState);
   });
 
   it('should remove offer to array "favoriteOffers" with "changeFavorite.fulfilled"', () => {
-    const state = {favoriteOffers: [mockOffer]};
-    const expectedState = {favoriteOffers: []};
+    const state = {favoriteOffers: [mockOffers[0], mockOffers[1]], fetchFavoriteOffersStatus: RequestStatus.Success};
+    const requestFavoriteData = {id: mockOffers[0].id, status: 1} as TFavoriteData;
+    const expectedState = {favoriteOffers: [mockOffers[1]], fetchFavoriteOffersStatus: RequestStatus.Success};
     const result = favoritesDataSlice.reducer(state, changeFavorite.fulfilled(
-      mockOffer, '', undefined
+      mockOffers[0], '', requestFavoriteData
     ));
 
     expect(result).toEqual(expectedState);

@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {TInitialState} from '../../types/state';
 import {NameSpace, RequestStatus} from '../../constants';
 import {fetchReviews, postReview} from '../api-actions';
+import { TReview } from '../../types/review';
 
 type TReviewsDataState = Pick<TInitialState, 'reviews' | 'fetchReviewsStatus' | 'postReviewStatus'>;
 
@@ -34,9 +35,9 @@ export const reviewsDataSlice = createSlice({
       .addCase(postReview.pending, (state) => {
         state.postReviewStatus = RequestStatus.Pending;
       })
-      .addCase(postReview.fulfilled, (state, action: PayloadAction<TReviewsDataState['reviews']>) => {
+      .addCase(postReview.fulfilled, (state, action: PayloadAction<TReview>) => {
         state.postReviewStatus = RequestStatus.Success;
-        state.reviews = [action.payload, ...state.reviews];
+        state.reviews.push(action.payload);
       })
       .addCase(postReview.rejected, (state) => {
         state.postReviewStatus = RequestStatus.Rejected;
