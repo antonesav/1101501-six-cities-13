@@ -1,7 +1,11 @@
+import { ThunkDispatch } from 'redux-thunk';
+import { createAPI } from '../services/api';
+import { Action } from 'redux';
 import {TOffer} from '../types/offer';
 import {TOfferFull} from '../types/offerFull';
 import {TReview} from '../types/review';
 import {TAuthUserData} from '../types/user-data';
+import { TAppState } from '../types/state';
 
 export const mockUser: TAuthUserData = {
   'name': 'Oliver Conner',
@@ -76,9 +80,54 @@ export const mockOfferFull: TOfferFull = {
   'bedrooms': 1,
   'maxAdults': 2
 };
-export const mockOffers: TOffer[] = new Array<TOffer>(3).fill(mockOffer);
+export const mockOffers: TOffer[] = [{
+  'id': '22ce00cc-b81b-4085-8a27-aebcd80dd266',
+  'title': 'The Pondhouse - A Magical Place',
+  'type': 'apartment',
+  'price': 368,
+  'previewImage': 'https://13.design.pages.academy/static/hotel/13.jpg',
+  'city': {
+    'name': 'Paris',
+    'location': {
+      'latitude': 48.85661,
+      'longitude': 2.351499,
+      'zoom': 13
+    }
+  },
+  'location': {
+    'latitude': 48.868610000000004,
+    'longitude': 2.342499,
+    'zoom': 16
+  },
+  'isFavorite': false,
+  'isPremium': true,
+  'rating': 4.2
+},
+{
+  'id': '22ce00cc-b81b-4085-8a47-aebcd80dd266',
+  'title': 'The Pondhouse - A Magical Place',
+  'type': 'apartment',
+  'price': 368,
+  'previewImage': 'https://13.design.pages.academy/static/hotel/13.jpg',
+  'city': {
+    'name': 'Paris',
+    'location': {
+      'latitude': 48.85661,
+      'longitude': 2.351499,
+      'zoom': 13
+    }
+  },
+  'location': {
+    'latitude': 48.868610000000004,
+    'longitude': 2.342499,
+    'zoom': 16
+  },
+  'isFavorite': false,
+  'isPremium': true,
+  'rating': 4.2
+}];
 export const mockReviews: TReview[] = [{
-  'id': 'b041999e-e959-4452-aea1-06561bcd78e3',
+  'id': 'b041999e-e959-4452-aea1-56561bcd78e3',
   'comment': 'I stayed here for one night and it was an unpleasant experience.',
   'date': '2023-06-26T21:00:00.436Z',
   'rating': 1,
@@ -99,3 +148,6 @@ export const mockReviews: TReview[] = [{
     'isPro': false
   }
 }];
+
+export type AppThunkDispatch = ThunkDispatch<TAppState, ReturnType<typeof createAPI>, Action>
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);

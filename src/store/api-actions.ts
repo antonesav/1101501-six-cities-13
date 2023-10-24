@@ -54,11 +54,11 @@ export const fetchReviews = createAsyncThunk<
   );
 
 export const postReview = createAsyncThunk<
-  TReview[], {reviewData: TReviewData; offerId: TOfferFull['id']}, TExtraArg
+  TReview, {reviewData: TReviewData; offerId: TOfferFull['id']}, TExtraArg
   >(
     `${NameSpace.Reviews}/postOfferReview`,
     async ({reviewData, offerId}, {extra: api}) => {
-      const {data} = await api.post<TReview[]>(`${APIRoute.Reviews}/${offerId}`, reviewData);
+      const {data} = await api.post<TReview>(`${APIRoute.Reviews}/${offerId}`, reviewData);
       return data;
     }
   );
@@ -74,7 +74,7 @@ export const fetchFavorites = createAsyncThunk<
   );
 
 export const changeFavorite = createAsyncThunk<
-  TOffer, TFavoriteData, TExtraArg & {state: TAppState}
+  TOffer | null, TFavoriteData, TExtraArg & {state: TAppState}
   >(
     `${NameSpace.Favorites}/addFavorite`,
     async ({id, status}, {extra: api, getState, dispatch}) => {
@@ -85,7 +85,7 @@ export const changeFavorite = createAsyncThunk<
         return null;
       }
 
-      const {data} = await api.post<TOffer[]>(`${APIRoute.Favorite}/${id}/${status}`);
+      const {data} = await api.post<TOffer>(`${APIRoute.Favorite}/${id}/${status}`);
       return data;
     }
   );

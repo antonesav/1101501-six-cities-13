@@ -31,7 +31,7 @@ describe('NearPlacesData slice', () => {
   it('should set "nearPlaces" to array with near place offers, "RequestStatus.Success" with "fetchNearPlaces.fulfilled"', () => {
     const expectedState = {nearPlaces: [mockOffer], fetchNearPlacesStatus: RequestStatus.Success};
     const result = nearPlacesDataSlice.reducer(undefined, fetchNearPlaces.fulfilled(
-      [mockOffer], '', undefined
+      [mockOffer], '', 'fulfilled'
     ));
 
     expect(result).toEqual(expectedState);

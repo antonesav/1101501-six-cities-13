@@ -31,7 +31,7 @@ describe('OfferData slice', () => {
   it('should set "offer" to offer info, "RequestStatus.Success" with "fetchOffer.fulfilled"', () => {
     const expectedState = {offer: mockOfferFull, fetchOfferStatus: RequestStatus.Success};
     const result = offerDataSlice.reducer(undefined, fetchOffer.fulfilled(
-      mockOfferFull, '', undefined
+      mockOfferFull, '', 'fulfilled'
     ));
 
     expect(result).toEqual(expectedState);
